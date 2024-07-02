@@ -1,42 +1,55 @@
 import React, { useState, useEffect } from 'react';
+import projet1Api from './axios/config';
 
 
 function App() {
   const [posts, setPosts] = useState([]);
+  const [items, setItems] = useState([]);
+
   const fetchMyApi = () => {
 
   }
-  useEffect(() => {
-
-    let headers = new Headers();
-    headers.append('Authorization', 'Basic ' + btoa('admin' + ":" + '123'));
-    headers.append('Content-Type', 'application/json');
-
-    fetch('http://127.0.0.1:8000/users/', {
-      headers: headers,
-      // credentials: 'include',
+  const getUsers = (token) => {
+    console.log(token)
+    return projet1Api.get("/users/", {
+      headers: {
+        "Authorization": "Token " + token
+      }
     })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        setPosts(data.results);
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
+  }
+  useEffect(() => {
+    const items = JSON.parse(localStorage.getItem('jwt'));
+    if (items) {
+      setItems(items);
+    }
+    // console.log(getUsers(items.data.token));
+
+    async function awaitUsers() {
+      let users = getUsers(items.data.token);
+      let completeUsers = await users;
+      setPosts(await completeUsers.data);
+    }
+    awaitUsers();
+
   }, []);
+  // useEffect(() => {
+  //   setPosts(getUsers())
+  //     , []
+  // });
   return (
     <div>
-      {
+      {posts.length === 0 ? <p>Carregando...</p> : (
+
         posts.map((post) => {
           return (
-            <div>
+            <div key={post.url}>
               <h2>nome: {post.username}</h2>
               <h2>email: {post.email}</h2>
               <hr />
             </div>
           );
         })
+      )
 
       }
     </div>

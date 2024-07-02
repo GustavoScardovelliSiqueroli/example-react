@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -18,6 +22,7 @@ a {
   color: #646cff;
   text-decoration: inherit;
 }
+
 a:hover {
   color: #535bf2;
 }
@@ -46,9 +51,11 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
+
 button:hover {
   border-color: #646cff;
 }
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
@@ -59,10 +66,146 @@ button:focus-visible {
     color: #213547;
     background-color: #ffffff;
   }
+
   a:hover {
     color: #747bff;
   }
+
   button {
     background-color: #f9f9f9;
   }
+}
+
+.login-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 600px;
+  height: 300px;
+  background-color: #dedede;
+  border-radius: 8px;
+  padding: 0 10% 0 10%;
+}
+
+.login-content input {
+  font-size: 25px;
+  width: 100%;
+  margin-bottom: 10px;
+  height: 60px;
+  border: none;
+  padding-left: 10px;
+}
+
+.login-content h1 {
+  font-size: 30px;
+}
+
+.login-content input:focus {
+  outline: none;
+}
+
+.login-buttons {
+  padding: 0 0 0 1%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.login-buttons input {
+  width: 200px;
+  background-color: #21354744;
+  border-radius: 8px;
+  transition: .3s;
+}
+
+.login-buttons input:hover {
+  cursor: pointer;
+  background-color: #747bff;
+}
+.form-content-login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+.login-buttons span{
+  font-size: 18px;
+  color: crimson;
+  font-weight: 500;
+  transition: .3s;
+}
+.login-buttons span:hover{
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.register-main{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 600px;
+  height: 400px;
+  background-color: #dedede;
+  border-radius: 8px;
+  padding: 0 10% 0 10%;
+}
+.register-main form input{
+  font-size: 25px;
+  width: 100%;
+  margin-bottom: 10px;
+  height: 60px;
+  border: none;
+  padding-left: 10px;
+}
+.register-main input:focus {
+  outline: none;
+}
+
+.register-main h1{
+font-size: 30px;
+}
+.bts-register span{
+  font-size: 18px;
+  color: #535bf2;
+  font-weight: 500;
+  transition: .3s;
+  width: 100%;
+  height: 20px;
+}
+.bts-register a{
+  width: 100%;
+  height: 20px;
+}
+.bts-register span:hover{
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+
+.bts-register {
+  padding: 0 0 0 1%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.bts-register input {
+  width: 30%;
+  background-color: #21354744;
+  border-radius: 8px;
+  transition: .3s;
+}
+
+.bts-register input:hover {
+  cursor: pointer;
+  background-color: #747bff;
 }
