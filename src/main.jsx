@@ -5,14 +5,14 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import "./index.css";
-import App from "./App";
 import Login from "./routes/Login";
 import Register from "./routes/Register";
-
+import Users from "./routes/Users";
+import RegisterCollaborator from './routes/RegisterCollaborator'
 const router = createBrowserRouter([
   {
     path: "users/",
-    element: <App></App>,
+    element: <Users></Users>,
   },
   {
     path: "register/",
@@ -22,6 +22,11 @@ const router = createBrowserRouter([
     path: "login/",
     element: <Login></Login>,
   },
+  {
+    path: "collaborator/register",
+    element: <RegisterCollaborator></RegisterCollaborator>
+  },
+
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
