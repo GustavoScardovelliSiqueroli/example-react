@@ -72,9 +72,9 @@ export default function UsersTable({ lsUser, page, setPage, count, rowsPerPage, 
                             </StyledTableRow>
                         ) : (
                             lsUser.map((row) => (
-                                <StyledTableRow key={row.username}>
+                                <StyledTableRow key={row.name}>
                                     <StyledTableCell component="th" scope="row">
-                                        {row.username}
+                                        {row.name}
                                     </StyledTableCell>
                                     <StyledTableCell align="right">{row.email}</StyledTableCell>
                                 </StyledTableRow>

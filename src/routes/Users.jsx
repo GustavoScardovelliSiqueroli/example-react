@@ -16,8 +16,7 @@ function Users() {
   // Função para buscar usuários da API com paginação e busca
   const getUsers = async (token, page, pageSize, search) => {
     try {
-      console.log("Token used for API call:", token);
-      const response = await projet1Api.get("/users/", {
+      const response = await projet1Api.get("/collaborators/", {
         params: {
           page: page + 1, // página base 1 para Django
           page_size: pageSize,

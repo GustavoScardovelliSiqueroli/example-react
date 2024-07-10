@@ -12,8 +12,8 @@ export default function RegisterCollaborator() {
         e.preventDefault();  // Evita o comportamento padrão do formulário
         const token = JSON.parse(localStorage.getItem("jwt")).token;
         try {
-            const response = await projet1Api.post("/users/", {
-                'username': collaboratorName,
+            const response = await projet1Api.post("/collaborators/", {
+                'name': collaboratorName,
                 'email': collaboratorEmail
             }, {
                 headers: {

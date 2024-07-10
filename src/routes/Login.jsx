@@ -17,16 +17,20 @@ function Login() {
     const loginUser = async (e) => {
         e.preventDefault();
         try {
-            const response = await projet1Api.post("/api/login/", {}, {
-                auth: {
-                    username: loginName,
-                    password: loginPassword
-                }
-            });
+            const response = await projet1Api.post("/api/login/", {
+                username: loginName,
+                password: loginPassword
+            }).then(function (response) {
+                console.log(response);
+                localStorage.setItem('jwt', JSON.stringify(response.data));
+                navigate("/users");
+            })
+                .catch(function (error) {
+                    console.log(error);
+                });;
 
             // Atualiza o localStorage 'jwt' com a resposta do login
-            localStorage.setItem('jwt', JSON.stringify(response.data));
-            navigate("/users");
+            
         } catch (error) {
             alert("Login incorreto!");
         }
@@ -60,7 +64,7 @@ function Login() {
                             />
                         </label>
                         <div className="login-buttons">
-                            <a href="#" onClick={()=>{navigate("/register/")}}><span>Não possui cadastro? Cadastrar</span></a>
+                            <a href="#" onClick={() => { navigate("/register/") }}><span>Não possui cadastro? Cadastrar</span></a>
                             <input type="submit" value="Entrar" name='submit' id='submit' />
                         </div>
                     </form>
