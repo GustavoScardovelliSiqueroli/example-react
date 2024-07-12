@@ -9,11 +9,11 @@ function Users() {
   const [items, setItems] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
-  const [page, setPage] = useState(0); // página inicial
-  const [rowsPerPage, setRowsPerPage] = useState(5); // quantidade inicial por página
-  const [count, setCount] = useState(0); // número total de itens
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [count, setCount] = useState(0);
+  const [selectedRow, setSelectedRow] = useState(null);
 
-  // Função para buscar usuários da API com paginação e busca
   const getUsers = async (token, page, pageSize, search) => {
     try {
       const response = await projet1Api.get("/collaborators/", {
@@ -32,6 +32,34 @@ function Users() {
       throw error;
     }
   }
+
+  const handleDelete = async () => {
+    if (!selectedRow) {
+      alert("Por favor, selecione um usuário para deletar.");
+      return;
+    }
+
+    const confirmDelete = window.confirm(`Tem certeza de que deseja deletar ${selectedRow.name}?`);
+    if (!confirmDelete) return;
+
+    try {
+      const response = await projet1Api.delete(`/collaborators/${selectedRow.id}/`, {
+        headers: {
+          "Authorization": "Token " + items.token
+        }
+      });
+
+      if (response.status === 204) {
+        setPosts(posts.filter(post => post.id !== selectedRow.id));
+        setSelectedRow(null);
+        alert("Usuário deletado com sucesso!");
+      }
+    } catch (error) {
+      console.error("Error deleting user:", error);
+      alert("Erro ao deletar usuário.");
+    }
+  };
+
 
   useEffect(() => {
     const storedItems = localStorage.getItem('jwt');
@@ -82,10 +110,20 @@ function Users() {
             />
             <i className="fi fi-br-search"></i>
           </div>
-          <div onClick={() => navigate("/collaborator/register/")}
-            id='create-user-icon'
-            className='create-user-icon'>
-            <i className="fi fi-br-plus"></i>
+          <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+
+            <div onClick={() => navigate("/collaborator/register/")}
+              id='create-user-icon'
+              className='create-user-icon'>
+              <i className="fi fi-br-plus"></i>
+            </div>
+            <div
+              id="create-user-icon"
+              style={{ marginLeft: '20px', backgroundColor: 'crimson' }}
+              onClick={()=>{handleDelete()}}
+            >
+              <i className="fi fi-br-trash"></i>
+            </div>
           </div>
         </div>
         {posts.length === 0 ? <h1 id='message'>Carregando...</h1> : (
@@ -96,6 +134,8 @@ function Users() {
             count={count}
             rowsPerPage={rowsPerPage}
             setRowsPerPage={setRowsPerPage}
+            selectedRow={selectedRow}
+            setSelectedRow={setSelectedRow}
           />
         )}
       </div>

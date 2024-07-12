@@ -9,7 +9,8 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import TablePagination from '@mui/material/TablePagination';
 import { ptBR as ptBRCore } from '@mui/material/locale';
-import { createTheme, ThemeProvider } from '@mui/material/styles'
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useNavigate } from 'react-router';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -23,14 +24,18 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     },
 }));
 
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
+const StyledTableRow = styled(TableRow)(({ theme, isSelected }) => ({
     '&:nth-of-type(odd)': {
-        backgroundColor: theme.palette.action.hover,
+        backgroundColor: isSelected ? '#747bff83' : theme.palette.action.hover,
     },
-    // hide last border
     '&:last-child td, &:last-child th': {
         border: 0,
     },
+    '&:hover': {
+        backgroundColor: isSelected ? '#747bff83' : '#747bff43',
+        cursor: 'pointer',
+    },
+    backgroundColor: isSelected ? '#747bff83' : 'inherit',
 }));
 
 const theme = createTheme(
@@ -42,7 +47,21 @@ const theme = createTheme(
     ptBRCore,
 );
 
-export default function UsersTable({ lsUser, page, setPage, count, rowsPerPage, setRowsPerPage }) {
+export default function UsersTable(
+    {
+        lsUser, page, setPage, count, rowsPerPage, setRowsPerPage, setSelectedRow, selectedRow
+    }
+) {
+    const navigate = useNavigate();
+
+
+    const handleRowClick = (row) => {
+        setSelectedRow(row);
+        if (row == selectedRow) {
+            navigate("/collaborator/update/", { state: { id: row.id, name: row.name, email: row.email } });
+        }
+    };
+
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
@@ -54,7 +73,6 @@ export default function UsersTable({ lsUser, page, setPage, count, rowsPerPage, 
 
     return (
         <ThemeProvider theme={theme}>
-
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 700 }} aria-label="customized table">
                     <TableHead>
@@ -72,7 +90,11 @@ export default function UsersTable({ lsUser, page, setPage, count, rowsPerPage, 
                             </StyledTableRow>
                         ) : (
                             lsUser.map((row) => (
-                                <StyledTableRow key={row.name}>
+                                <StyledTableRow
+                                    key={row.id}
+                                    isSelected={selectedRow === row}
+                                    onClick={() => handleRowClick(row)}
+                                >
                                     <StyledTableCell component="th" scope="row">
                                         {row.name}
                                     </StyledTableCell>
